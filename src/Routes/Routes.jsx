@@ -3,6 +3,7 @@ import MainLayouts from "../Layouts/MainLayouts";
 import Home from "../Pages/Home";
 import MobileApps from "../Pages/MobileApps";
 import AppsDetailsPages from "../Pages/AppsDetailsPages";
+import TrendingApps from "../Pages/TrendingApps";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
         path: "/mobileapps/:id",
         element: <AppsDetailsPages></AppsDetailsPages>,
       },
+      {
+        path:"/installation",
+        element:<TrendingApps></TrendingApps>
+      }
     ],
   },
 ]);

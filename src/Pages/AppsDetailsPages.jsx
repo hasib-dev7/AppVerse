@@ -2,21 +2,32 @@ import { useParams } from "react-router";
 import useMobileApps from "../Hooks/useMobileApps";
 import Content from "../Component/Content";
 import { Download, Star, ThumbsUp } from "lucide-react";
-import { addToCollectionInsatllData } from "../Utility/addToInstall";
-import { useState } from "react";
-
+import {
+  addToCollectionInsatllData,
+  getInstallData,
+} from "../Utility/addToInstall";
+import { useEffect, useState } from "react";
 const AppsDetailsPages = () => {
   const [isSelected, setIsSelected] = useState(false);
   const { id } = useParams();
   const [mobileApps, loading, error] = useMobileApps();
-
+  // ✅ Check if already installed
+  useEffect(() => {
+    const storedApps = getInstallData() || [];
+    const alreadyInstalled = storedApps.includes(id);
+    setIsSelected(alreadyInstalled);
+  }, [id]);
   if (loading) return <p>Loading...</p>;
   if (error) return <p className="text-red-500">Error: {error}</p>;
   const appDetails = mobileApps.find((a) => String(a.id) === id);
+  // Prevent hooks/render errors
+  if (!appDetails) return <p>App not found!</p>;
   const { image, title, companyName, downloads, ratingAvg, reviews, size } =
     appDetails;
+  //
   const handleInstallApp = (id) => {
     addToCollectionInsatllData(id);
+    setIsSelected(true)
   };
   return (
     <>

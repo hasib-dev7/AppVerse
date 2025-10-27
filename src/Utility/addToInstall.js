@@ -19,4 +19,4 @@ const addToCollectionInsatllData = (id) => {
     localStorage.setItem("install-app", data);
   }
 };
-export { addToCollectionInsatllData };
+export { addToCollectionInsatllData,getInstallData  };
