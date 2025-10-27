@@ -19,4 +19,11 @@ const addToCollectionInsatllData = (id) => {
     localStorage.setItem("install-app", data);
   }
 };
-export { addToCollectionInsatllData,getInstallData  };
+// delete
+const removeFromInstalledList=(id)=>{
+    const installedList=getInstallData().map(i=>parseFloat(i))
+    const isExisting=installedList.filter(i=>i!==id)
+    const data=JSON.stringify(isExisting)
+    localStorage.setItem("install-app",data)
+}
+export { addToCollectionInsatllData,getInstallData ,removeFromInstalledList };

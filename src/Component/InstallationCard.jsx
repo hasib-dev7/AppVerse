@@ -1,8 +1,10 @@
 import { Download, Star } from "lucide-react";
 
-const InstallationCard = ({ installed }) => {
-  const { image, title, companyName, ratingAvg, downloads, size } = installed;
-  console.log(installed);
+
+const InstallationCard = ({ installed, handleRemove }) => {
+   
+  const { image, title, companyName, ratingAvg, downloads, size ,id} = installed;
+
   return (
     <>
       <div className="flex justify-between items-center p-5 mb-5 bg-white shadow-md rounded-sm">
@@ -42,7 +44,7 @@ const InstallationCard = ({ installed }) => {
           </div>
         </div>
         <div>
-          <button className="bg-[#00D390] text-white text-lg font-semibold px-5 py-3 rounded-lg">Unstall</button>
+          <button onClick={()=> handleRemove(id)} className="bg-[#00D390] text-white text-lg font-semibold px-5 py-3 rounded-lg">Uninstall</button>
         </div>
       </div>
     </>

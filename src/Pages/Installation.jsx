@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import Content from "../Component/Content";
 import useMobileApps from "../Hooks/useMobileApps";
-import { getInstallData } from "../Utility/addToInstall";
+import {
+  getInstallData,
+  removeFromInstalledList,
+} from "../Utility/addToInstall";
 import InstallationCard from "../Component/InstallationCard";
+import { ArrowBigDown } from "lucide-react";
 
 const Installation = () => {
   const [installation, setInstallation] = useState([]);
+  const [sortDownload, setSortDownload] = useState("");
   const [mobileApps, loading, error] = useMobileApps();
   useEffect(() => {
     if (!loading && !error && mobileApps.length > 0) {
@@ -17,7 +22,29 @@ const Installation = () => {
   }, [mobileApps, loading, error]);
   if (loading) return <p>Loading...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
-
+  // sort function
+  const handleSort = (type) => {
+    setSortDownload(type);
+    if (type === "low") {
+      const sortLow = [...installation].sort(
+        (a, b) => a.downloads - b.downloads
+      );
+      setInstallation(sortLow);
+    }
+    if (type === "high") {
+      const sortHigh = [...installation].sort(
+        (a, b) => b.downloads - a.downloads
+      );
+      setInstallation(sortHigh);
+    }
+  };
+  //   remove installed list app
+  const handleRemove = (id) => {
+    // remove from localstorage
+    removeFromInstalledList(id);
+    // for ui instant update
+    setInstallation((prev) => prev.filter((app) => app.id !== id));
+  };
   return (
     <>
       <Content>
@@ -34,32 +61,38 @@ const Installation = () => {
             <p className="text-xl lg:text-2xl font-semibold text-[#001931]">
               ({installation.length}) Apps Found
             </p>
-            {/* search bar section */}
-            <label className="input">
-              <svg
-                className="h-[1em] opacity-50"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <g
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2.5"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path>
-                </g>
-              </svg>
-              <input type="search" required placeholder="Search Apps" />
-            </label>
+            {/* dropDown menu section */}
+            <details className="dropdown">
+              <summary className="btn m-1">
+                {sortDownload ? (
+                  <span>
+                    {sortDownload === "low" ? "Low-High" : "High-Low"}
+                  </span>
+                ) : (
+                  <p className="flex items-center gap-1">
+                    Sort By Size <ArrowBigDown size={16} strokeWidth={0.75} />
+                  </p>
+                )}
+              </summary>
+              <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                <li>
+                  <a onClick={() => handleSort("low")}>Low-High</a>
+                </li>
+                <li>
+                  <a onClick={() => handleSort("high")}>High-Low</a>
+                </li>
+              </ul>
+            </details>
           </div>
           {/* installation card section */}
           <div>
-            {
-                installation.map(installed=><InstallationCard key={installed.id} installed={installed}></InstallationCard>)
-            }
+            {installation.map((installed) => (
+              <InstallationCard
+                key={installed.id}
+                installed={installed}
+                handleRemove={handleRemove}
+              ></InstallationCard>
+            ))}
           </div>
         </div>
       </Content>
