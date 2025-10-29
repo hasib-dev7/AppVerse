@@ -2,6 +2,7 @@ import { useParams } from "react-router";
 import useMobileApps from "../Hooks/useMobileApps";
 import Content from "../Component/Content";
 import { Download, Star, ThumbsUp } from "lucide-react";
+import ReviewChart from "../Component/ReviewChart";
 import {
   addToCollectionInsatllData,
   getInstallData,
@@ -27,30 +28,30 @@ const AppsDetailsPages = () => {
   //
   const handleInstallApp = (id) => {
     addToCollectionInsatllData(id);
-    setIsSelected(true)
+    setIsSelected(true);
   };
   return (
     <>
       <Content>
-        <div className="flex gap-10 pt-20">
-          <figure className="w-4/12 ">
+        <div className="flex flex-col md:flex-row gap-10 pt-20">
+          <figure className="w-full md:w-4/12 ">
             <img className="w-full h-[312px]" src={image} alt="" />
           </figure>
           <div className="flex-1">
             <div>
-              <h2 className="text-[#001931] text-3xl font-bold">
+              <h2 className="text-[#001931] tex-xl md:text-2xl lg:text-3xl font-bold">
                 {title} : {companyName}
               </h2>
-              <p className="text-xl font-medium">
+              <p className="text-sm md:text-xl font-medium">
                 <span className="text-[#627382]">Developed by</span>{" "}
                 <span className="bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent">
                   productive.io
                 </span>
               </p>
             </div>
-            <div className="divider"></div>
+            
             {/* card */}
-            <div className="flex gap-12">
+            <div className="flex gap-12 mt-2">
               <div className="space-y-3">
                 <p>
                   <Download color="#00D390" strokeWidth={2.5}></Download>
@@ -91,6 +92,11 @@ const AppsDetailsPages = () => {
               {isSelected === true ? "Install" : `Install Now (${size} MB)`}
             </button>
           </div>
+        </div>
+        {/* reviews chart */}
+        <div className="divider"></div>
+        <div className="pt-6">
+          <ReviewChart></ReviewChart>
         </div>
       </Content>
     </>

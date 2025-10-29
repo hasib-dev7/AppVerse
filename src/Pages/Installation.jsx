@@ -7,7 +7,6 @@ import {
 } from "../Utility/addToInstall";
 import InstallationCard from "../Component/InstallationCard";
 import { ArrowBigDown } from "lucide-react";
-
 const Installation = () => {
   const [installation, setInstallation] = useState([]);
   const [sortDownload, setSortDownload] = useState("");
