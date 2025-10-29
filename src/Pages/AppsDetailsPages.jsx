@@ -23,8 +23,16 @@ const AppsDetailsPages = () => {
   const appDetails = mobileApps.find((a) => String(a.id) === id);
   // Prevent hooks/render errors
   if (!appDetails) return <p>App not found!</p>;
-  const { image, title, companyName, downloads, ratingAvg, reviews, size } =
-    appDetails;
+  const {
+    image,
+    title,
+    companyName,
+    downloads,
+    ratingAvg,
+    reviews,
+    size,
+    description,
+  } = appDetails;
   //
   const handleInstallApp = (id) => {
     addToCollectionInsatllData(id);
@@ -49,7 +57,7 @@ const AppsDetailsPages = () => {
                 </span>
               </p>
             </div>
-            
+
             {/* card */}
             <div className="flex gap-12 mt-2">
               <div className="space-y-3">
@@ -95,9 +103,12 @@ const AppsDetailsPages = () => {
         </div>
         {/* reviews chart */}
         <div className="divider"></div>
-        <div className="pt-6">
+        <div className="pt-4">
           <ReviewChart></ReviewChart>
         </div>
+        {/* description */}
+        <div className="divider"></div>
+        <p className="text-[#627382] text-lg lg:text-xl pt-2 pb-6">{description}</p>
       </Content>
     </>
   );
