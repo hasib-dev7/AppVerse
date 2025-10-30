@@ -35,7 +35,7 @@ const Home = () => {
             </div>
           </div>
           {/* show all page button */}
-          <div className="flex justify-center pt-10 pb-20">
+          <div className="flex justify-center pt-10 pb-10">
             <Link to="/apps" className="bg-gradient-to-r from-[#632EE3] to-[#9F62F2] text-white font-semibold px-10 py-4 rounded-sm shadow text-center">
               Show All
             </Link>

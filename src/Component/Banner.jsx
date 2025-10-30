@@ -15,7 +15,6 @@ const Banner = () => {
               Productive
             </span>
             <span className="text-4xl md:text-5xl lg:text-7xl font-bold text-[#001931]">
-             
               Apps
             </span>
           </h2>
@@ -30,11 +29,17 @@ const Banner = () => {
           <div className="flex justify-center gap-5 pt-5 md:pt-8 lg:pt-10">
             <button className="flex items-center gap-3 border border-gray-300 shadow-sm px-5 py-3 rounded-md text-[#001931] font-semibold">
               <img src={googleImage} alt="google store image" />
-              <span>Google Play</span>
+              <span>
+                <a href="https://play.google.com/store/apps/details?id=com.google.android.googlequicksearchbox&hl=en" target="blank">
+                  Google Play
+                </a>
+              </span>
             </button>
             <button className="flex items-center gap-3 border border-gray-300 shadow-sm  px-5 py-3 rounded-md text-[#001931] font-semibold">
               <img src={appImage} alt="google store image" />
-              <span>App Store</span>
+              <span>
+                <a href="https://www.apple.com/app-store/" target="blank">App Store</a>
+              </span>
             </button>
           </div>
         </div>
