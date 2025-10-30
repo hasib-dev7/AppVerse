@@ -29,43 +29,103 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a>Home</a>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent underline underline-offset-4 decoration-2 decoration-[#9F62F2]"
+                      : "text-gray-700 hover:text-[#9F62F2]"
+                  }
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/apps"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent underline underline-offset-4 decoration-2 decoration-[#9F62F2]"
+                      : "text-gray-700 hover:text-[#9F62F2]"
+                  }
+                >
+                  Apps
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/installation"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent underline underline-offset-4 decoration-2 decoration-[#9F62F2]"
+                      : "text-gray-700 hover:text-[#9F62F2]"
+                  }
+                >
+                  Installation
+                </NavLink>
               </li>
             </ul>
           </div>
           {/* nave left logo */}
           <div className="flex items-center gap-2">
             <figure>
-              <img
-                className="w-12 h-12 md:w-14 md:h-14"
-                src={navLogo}
-                alt="nav logo image"
-              />
+              <NavLink to="/">
+                <img
+                  className="w-12 h-12 md:w-14 md:h-14"
+                  src={navLogo}
+                  alt="nav logo image"
+                />
+              </NavLink>
             </figure>
             <h2 className="text-xl font-bold bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent">
               HERO.IO
             </h2>
-            {/* <h2 className="text-5xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              HERO.IO
-            </h2> */}
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 font-semibold hover:underline">
+          <ul className="menu menu-horizontal px-1 font-semibold">
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive
+                    ? "bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent underline underline-offset-4 decoration-2 decoration-[#9F62F2]"
+                    : "text-gray-700 hover:text-[#9F62F2]"
+                }
+              >
+                Home
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/apps">Apps</NavLink>
+              <NavLink
+                to="/apps"
+                className={({ isActive }) =>
+                  isActive
+                    ? "bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent underline underline-offset-4 decoration-2 decoration-[#9F62F2]"
+                    : "text-gray-700 hover:text-[#9F62F2]"
+                }
+              >
+                Apps
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/installation">Installation</NavLink>
+              <NavLink
+                to="/installation"
+                className={({ isActive }) =>
+                  isActive
+                    ? "bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent underline underline-offset-4 decoration-2 decoration-[#9F62F2]"
+                    : "text-gray-700 hover:text-[#9F62F2]"
+                }
+              >
+                Installation
+              </NavLink>
             </li>
           </ul>
         </div>
         <div className="navbar-end">
           <a
-            href="#"
+            href="https://github.com/"
+            target="blank"
             className="flex items-center gap-2 px-4 py-3 text-white font-semibold rounded-md bg-gradient-to-r from-[#632EE3] to-[#9F62F2]"
           >
             {" "}
