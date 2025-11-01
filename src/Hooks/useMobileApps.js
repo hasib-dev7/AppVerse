@@ -6,17 +6,18 @@ const useMobileApps = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     const fatchMobileApps = async () => {
       try {
         setLoading(true);
         setError(null);
         const respons = await axios("../mobileApps.json");
-        setMobileApps(respons.data);
+        setTimeout(() => {
+          setMobileApps(respons.data);
+          setLoading(false);
+        }, 1000);
       } catch (err) {
         setError(err.message || "Failed to fetch products");
-      } finally {
         setLoading(false);
       }
     };

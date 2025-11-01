@@ -8,6 +8,9 @@ import {
   getInstallData,
 } from "../Utility/addToInstall";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import LoadingSpinner from "../Component/LoadingSpinner";
+import PagesError from "./ErrorPages/PagesError";
 const AppsDetailsPages = () => {
   const [isSelected, setIsSelected] = useState(false);
   const { id } = useParams();
@@ -18,11 +21,11 @@ const AppsDetailsPages = () => {
     const alreadyInstalled = storedApps.includes(id);
     setIsSelected(alreadyInstalled);
   }, [id]);
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingSpinner></LoadingSpinner>;
   if (error) return <p className="text-red-500">Error: {error}</p>;
   const appDetails = mobileApps.find((a) => String(a.id) === id);
   // Prevent hooks/render errors
-  if (!appDetails) return <p>App not found!</p>;
+  if (!appDetails) return <PagesError></PagesError>;
   const {
     image,
     title,
@@ -37,6 +40,7 @@ const AppsDetailsPages = () => {
   const handleInstallApp = (id) => {
     addToCollectionInsatllData(id);
     setIsSelected(true);
+    toast.success(`${title} Installed Successfully`);
   };
   return (
     <>
@@ -108,7 +112,9 @@ const AppsDetailsPages = () => {
         </div>
         {/* description */}
         <div className="divider"></div>
-        <p className="text-[#627382] text-lg lg:text-xl pt-2 pb-6">{description}</p>
+        <p className="text-[#627382] text-lg lg:text-xl pt-2 pb-6">
+          {description}
+        </p>
       </Content>
     </>
   );

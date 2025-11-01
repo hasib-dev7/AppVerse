@@ -4,10 +4,19 @@ import Home from "../Pages/Home";
 import MobileApps from "../Pages/MobileApps";
 import AppsDetailsPages from "../Pages/AppsDetailsPages";
 import Installation from "../Pages/Installation";
+import AllError from "../Pages/ErrorPages/AllError";
+import LoadingSpinner from "../Component/LoadingSpinner";
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayouts></MainLayouts>,
+    errorElement: <AllError></AllError>,
+    hydrateFallbackElement: (
+      <p>
+        <LoadingSpinner></LoadingSpinner>
+      </p>
+    ),
     children: [
       {
         index: true,
@@ -24,6 +33,7 @@ const router = createBrowserRouter([
       {
         path: "/mobileapps/:id",
         element: <AppsDetailsPages></AppsDetailsPages>,
+        
       },
       {
         path: "/installation",

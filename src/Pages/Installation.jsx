@@ -7,6 +7,9 @@ import {
 } from "../Utility/addToInstall";
 import InstallationCard from "../Component/InstallationCard";
 import { ArrowBigDown } from "lucide-react";
+import LoadingSpinner from "../Component/LoadingSpinner";
+import { toast } from "react-toastify";
+
 const Installation = () => {
   const [installation, setInstallation] = useState([]);
   const [sortDownload, setSortDownload] = useState("");
@@ -19,7 +22,7 @@ const Installation = () => {
       setInstallation(isExting);
     }
   }, [mobileApps, loading, error]);
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingSpinner></LoadingSpinner>;
   if (error) return <p className="text-red-500">{error}</p>;
   // sort function
   const handleSort = (type) => {
@@ -37,17 +40,24 @@ const Installation = () => {
       setInstallation(sortHigh);
     }
   };
+ 
   //   remove installed list app
   const handleRemove = (id) => {
+    // find the app first
+  const app = installation.find((app) => app.id === id);
     // remove from localstorage
     removeFromInstalledList(id);
     // for ui instant update
     setInstallation((prev) => prev.filter((app) => app.id !== id));
+  // show toast with title
+  if (app) {
+    toast.success(`${app.title} : ${app.companyName}  removed successfully!`);
+  }
   };
   return (
     <>
       <Content>
-        <div>
+        <div >
           <div className="pt-20 pb-10">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#001931] text-center">
               Your Installed Apps
@@ -84,7 +94,7 @@ const Installation = () => {
             </details>
           </div>
           {/* installation card section */}
-          <div>
+          <div className="pb-5">
             {installation.map((installed) => (
               <InstallationCard
                 key={installed.id}

@@ -1,12 +1,17 @@
 import Banner from "../Component/Banner";
 import Content from "../Component/Content";
 import HeroSection from "../Component/HeroSection";
+import LoadingSpinner from "../Component/LoadingSpinner";
+
 import MobileAppsCard from "../Component/MobileAppsCard";
+// import useLoadingSpinner from "../Hooks/useLoadingSpinner";
 import useMobileApps from "../Hooks/useMobileApps";
 import { Link } from "react-router";
 const Home = () => {
   const [mobileApps, loading, error] = useMobileApps();
-  if (loading) return <p>loading apps ..</p>;
+  // const loadingSpinner=useLoadingSpinner()
+  // if(loadingSpinner)return <LoadingSpinner></LoadingSpinner>
+  if (loading) return <LoadingSpinner></LoadingSpinner>;
   if (error) return <p className="text-red-500">Error: {error}</p>;
   const homePageApps = mobileApps.slice(0, 8);
 
