@@ -26,15 +26,4 @@ Visit `https://steady-tulumba-b24f25.netlify.app/` in your browser.
 
 ---
 
-## 🏗️ Build
-
-```bash
-npm run build
-```
-
-Deploy the `build/` folder to Netlify.
-
-
----
-
 > Made with ❤️ using React & Tailwind CSS
