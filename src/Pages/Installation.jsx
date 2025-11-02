@@ -9,7 +9,7 @@ import InstallationCard from "../Component/InstallationCard";
 import { ArrowBigDown } from "lucide-react";
 import LoadingSpinner from "../Component/LoadingSpinner";
 import { toast } from "react-toastify";
-
+import { Link } from "react-router";
 const Installation = () => {
   const [installation, setInstallation] = useState([]);
   const [sortDownload, setSortDownload] = useState("");
@@ -40,24 +40,24 @@ const Installation = () => {
       setInstallation(sortHigh);
     }
   };
- 
+
   //   remove installed list app
   const handleRemove = (id) => {
     // find the app first
-  const app = installation.find((app) => app.id === id);
+    const app = installation.find((app) => app.id === id);
     // remove from localstorage
     removeFromInstalledList(id);
     // for ui instant update
     setInstallation((prev) => prev.filter((app) => app.id !== id));
-  // show toast with title
-  if (app) {
-    toast.success(`${app.title} : ${app.companyName}  removed successfully!`);
-  }
+    // show toast with title
+    if (app) {
+      toast.success(`${app.title} : ${app.companyName}  removed successfully!`);
+    }
   };
   return (
     <>
       <Content>
-        <div >
+        <div>
           <div className="pt-20 pb-10">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#001931] text-center">
               Your Installed Apps
@@ -94,15 +94,29 @@ const Installation = () => {
             </details>
           </div>
           {/* installation card section */}
-          <div className="pb-5">
-            {installation.map((installed) => (
-              <InstallationCard
-                key={installed.id}
-                installed={installed}
-                handleRemove={handleRemove}
-              ></InstallationCard>
-            ))}
-          </div>
+
+          {installation.length > 0 ? (
+            <div className="pb-5">
+              {installation.map((installed) => (
+                <InstallationCard
+                  key={installed.id}
+                  installed={installed}
+                  handleRemove={handleRemove}
+                ></InstallationCard>
+              ))}
+            </div>
+          ) : (
+            <div className="col-span-full items-center justify-center pt-24">
+              <p className="text-5xl font-bold text-center text-gray-500">
+                No apps found installation
+              </p>
+              <div className="flex justify-center pt-10 pb-20">
+                <Link to="/" className="bg-gradient-to-r from-[#632EE3] to-[#9F62F2] text-white font-semibold px-10 py-4 rounded-sm shadow text-center">
+                 Go Back!
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </Content>
     </>

@@ -34,24 +34,6 @@ npm run build
 
 Deploy the `build/` folder to Netlify.
 
----
-
-## 📁 Structure
-
-```
-/src
-  /components
-  /hooks
-  /pages
-  /assets
-```
-
----
-
-## 👨‍💻 Author
-
-**Your Name**
-[your-email@example.com](mailto:your-email@example.com)
 
 ---
 
