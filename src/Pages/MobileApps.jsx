@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Content from "../Component/Content";
 import useMobileApps from "../Hooks/useMobileApps";
 import MobileAppsCard from "../Component/MobileAppsCard";
@@ -6,23 +6,25 @@ import LoadingSpinner from "../Component/LoadingSpinner";
 
 const MobileApps = () => {
   const [appSearch, setAppSearch] = useState("");
-  const [searchLoading, setSearchLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
   const [mobileApps, loading, error] = useMobileApps();
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      setSearchLoading(true); // spinner চালু
-      setSearchTerm(appSearch); // search term update
-      setTimeout(() => setSearchLoading(false), 1000); // spinner 1s চালু থাকবে
+  useEffect(() => {
+    if (appSearch) {
+      setIsSearching(true); // সার্চ শুরু হলে true
+      const timer = setTimeout(() => {
+        setIsSearching(false); // সামান্য সময় পর false (লোডিং বন্ধ)
+      }, 500); // <-- 0.5 সেকেন্ড পর বন্ধ হবে
+      return () => clearTimeout(timer);
+    } else {
+      setIsSearching(false);
     }
-  };
-  if (loading || searchLoading) return <LoadingSpinner></LoadingSpinner>;
+  }, [appSearch]);
+  if (loading) return <LoadingSpinner></LoadingSpinner>;
   if (error) return <p className="text-red-500">Error: {error}</p>;
-  const tram = searchTerm.trim().toLocaleLowerCase();
-  const searchedApps =
-    tram || searchLoading
-      ? mobileApps.filter((a) => a.title.toLocaleLowerCase().includes(tram))
-      : mobileApps;
+  const tram = appSearch.trim().toLocaleLowerCase();
+  const searchedApps = tram
+    ? mobileApps.filter((a) => a.title.toLocaleLowerCase().includes(tram))
+    : mobileApps;
 
   return (
     <>
@@ -59,34 +61,39 @@ const MobileApps = () => {
             </svg>
             <input
               onChange={(e) => setAppSearch(e.target.value)}
-              onKeyDown={handleKeyDown}
               type="search"
               required
               placeholder="Search Apps"
             />
           </label>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-5">
-          {searchedApps.length > 0 ? (
-            searchedApps.map((app) => (
-              <MobileAppsCard key={app.id} mobileApp={app}></MobileAppsCard>
-            ))
-          ) : (
-            <div className="col-span-full items-center justify-center pt-24">
-              <p className="text-5xl font-bold text-center text-gray-500">
-                No apps found matching
-              </p>
-              <div className="flex justify-center pt-10 pb-20">
-                <button
-                  onClick={() => setSearchTerm("")}
-                  className="bg-gradient-to-r from-[#632EE3] to-[#9F62F2] text-white font-semibold px-10 py-4 rounded-sm shadow text-center"
-                >
-                  Show All Apps
-                </button>
+        {isSearching ? (
+          <div className="flex justify-center ">
+            <LoadingSpinner></LoadingSpinner>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-5">
+            {searchedApps.length > 0 ? (
+              searchedApps.map((app) => (
+                <MobileAppsCard key={app.id} mobileApp={app}></MobileAppsCard>
+              ))
+            ) : (
+              <div className="col-span-full items-center justify-center pt-24">
+                <p className="text-5xl font-bold text-center text-gray-500">
+                  No apps found matching
+                </p>
+                <div className="flex justify-center pt-10 pb-20">
+                  <button
+                    onClick={() => setAppSearch("")}
+                    className="bg-gradient-to-r from-[#632EE3] to-[#9F62F2] text-white font-semibold px-10 py-4 rounded-sm shadow text-center"
+                  >
+                    Show All Apps
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </Content>
     </>
   );
